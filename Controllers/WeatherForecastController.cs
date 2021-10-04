@@ -53,19 +53,7 @@ namespace LearnClosedXML.Controllers
             {
                 using (var workbook = new XLWorkbook())
                 {
-                    IXLWorksheet worksheet = workbook.Worksheets.Add("Authors");
-                    worksheet.Cell(1, 1).Value = "Id";
-                    worksheet.Cell(1, 2).Value = "FirstName";
-                    worksheet.Cell(1, 3).Value = "LastName";
-
-                    int index = 2;
-                    foreach (var author in authors)
-                    {
-                        worksheet.Cell(index, 1).Value = author.Id;
-                        worksheet.Cell(index, 2).Value = author.FirstName;
-                        worksheet.Cell(index, 3).Value = author.LastName;
-                        index++;
-                    }
+                    GenerateBody(authors, workbook);
 
                     using (var stream = new MemoryStream())
                     {
@@ -78,6 +66,27 @@ namespace LearnClosedXML.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.ToString());
+            }
+        }
+
+        private static void GenerateBody(List<Author> authors, XLWorkbook workbook)
+        {
+            IXLWorksheet worksheet = workbook.Worksheets.Add("Authors");
+            List<string> headers = new List<string>() { "Id", "FirstName", "LastName" };
+            int indexHeader = 1;
+            foreach (var header in headers)
+            {
+                worksheet.Cell(1, indexHeader).Value = header;
+                indexHeader++;
+            }
+
+            int index = 2;
+            foreach (var author in authors)
+            {
+                worksheet.Cell(index, 1).Value = author.Id;
+                worksheet.Cell(index, 2).Value = author.FirstName;
+                worksheet.Cell(index, 3).Value = author.LastName;
+                index++;
             }
         }
     }
