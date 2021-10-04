@@ -44,7 +44,7 @@ namespace LearnClosedXML.Controllers
             List<Author> authors = new List<Author>
             {
                 new Author { Id = 1, FirstName = "Joydip", LastName = "Kanjilal" },
-                new Author { Id = 2, FirstName = "Steve", LastName = "Smith" },
+                new Author { Id = 2, FirstName = "Steve jos jos jos", LastName = "Smith" },
                 new Author { Id = 3, FirstName = "Anand", LastName = "Narayaswamy"}
             };
             string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -77,17 +77,31 @@ namespace LearnClosedXML.Controllers
             foreach (var header in headers)
             {
                 worksheet.Cell(1, indexHeader).Value = header;
+
+                //styling
+                worksheet.Cell(1, indexHeader).Style.Fill.SetBackgroundColor(XLColor.Yellow);
+                worksheet.Cell(1, indexHeader).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Cell(1, indexHeader).Style.Font.SetBold();
                 indexHeader++;
             }
-
+            
             int index = 2;
             foreach (var author in authors)
             {
                 worksheet.Cell(index, 1).Value = author.Id;
                 worksheet.Cell(index, 2).Value = author.FirstName;
                 worksheet.Cell(index, 3).Value = author.LastName;
+
+                //styling
+                worksheet.Cell(index, 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Cell(index, 2).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Cell(index, 3).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+
                 index++;
             }
+
+            //styling
+            worksheet.Columns(1, 3).AdjustToContents();
         }
     }
     public class Author  
