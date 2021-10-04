@@ -79,13 +79,19 @@ namespace LearnClosedXML.Controllers
                 worksheet.Cell(1, indexHeader).Value = header;
 
                 //styling
+                worksheet.Range(worksheet.Cell(1, indexHeader), worksheet.Cell(3, indexHeader))
+                    .Merge()
+                    .Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+
                 worksheet.Cell(1, indexHeader).Style.Fill.SetBackgroundColor(XLColor.Yellow);
-                worksheet.Cell(1, indexHeader).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 worksheet.Cell(1, indexHeader).Style.Font.SetBold();
+                worksheet.Cell(1, indexHeader).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                worksheet.Cell(1, indexHeader).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+
                 indexHeader++;
             }
             
-            int index = 2;
+            int index = 4;
             foreach (var author in authors)
             {
                 worksheet.Cell(index, 1).Value = author.Id;
